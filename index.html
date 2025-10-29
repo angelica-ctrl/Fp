@@ -231,7 +231,6 @@
     window.location.href = "homepage.html";
   });
 
-  // 🔹 Switch to Sign Up form
   showSignup.addEventListener('click', (e) => {
     e.preventDefault();
     loginSection.style.display = 'none';
@@ -247,8 +246,8 @@
   const signupForm = signupSection.querySelector('form');
   signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    alert("Account created successfully! Please log in."); 
+    alert("Account created successfully! Please log in.");
     signupSection.style.display = 'none';
-    loginSection.style.display = 'flex';
+    loginSection.style.display = 'flex'; 
   });
 </script>
