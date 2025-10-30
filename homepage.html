@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-VoiceSpartan</title>
+  <title>E-VoiceSpartan — Home</title>
   <style>
     body {
       margin: 0;
@@ -14,6 +14,7 @@
       scroll-behavior: smooth;
     }
 
+    /* NAVBAR STYLE */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -64,8 +65,87 @@
       background-color: transparent;
       color: #b30000;
       font-weight: bold;
+      cursor: pointer;
       transition: all 0.3s;
     }
+
+    .navbar .logout:hover {
+      background-color: #b30000;
+      color: #fff;
+    }
+
+    /* MAIN CONTENT */
+    .content {
+      text-align: center;
+      margin-top: 100px;
+      background-color: rgba(255, 255, 255, 0.6);
+      width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 20px;
+      padding: 50px 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .content h1 {
+      color: #b30000;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      background-color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      padding: 12px 0;
+      font-weight: 600;
+      color: #000;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION BAR -->
+  <div class="navbar">
+    <div class="brand">E-VoiceSpartan</div>
+    <div class="menu">
+      <a href="homepage.html" class="active">Home</a>
+      <a href="file-complaint.html">File Complaint</a>
+      <a href="#">Submit Suggestion</a>
+      <button class="logout" id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+    <h1>Welcome to E-VoiceSpartan</h1>
+    <p>
+      Empowering students to voice out their concerns and suggestions.<br />
+      Use the navigation bar above to file a complaint or submit a suggestion.
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Leading Innovations, Transforming Lives, Building the Nation
+  </div>
+
+  <!-- LOGOUT SCRIPT -->
+  <script>
+    const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn.addEventListener("click", function () {
+      alert("You have been logged out.");
+      window.location.href = "index.html"; // Redirect to login page
+    });
+  </script>
+</body>
+</html>    }
 
     .navbar .logout:hover {
       background-color: #b30000;
@@ -211,14 +291,21 @@
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <div class="brand" id="menu-btn">☰ E-VoiceSpartan</div>
-    <div class="menu">
-      <a href="#home" class="nav-link active">Home</a>
-      <a href="#complaint" class="nav-link">File Complaint</a>
-      <a href="#suggestion" class="nav-link">Submit Suggestion</a>
-      <a href="#logout" class="logout">Logout</a>
-    </div>
+<body>
+  <!-- 🔹 ILAGAY MO ITO SA PINAKA-ITAAS NG BODY -->
+  <nav class="nav-links">
+    <a href="homepage.html">Home</a>
+    <a href="file-complaint.html">File Complaint</a>  <!-- 🔗 kapag pinindot, pupunta sa complaint file -->
+    <a href="#">Submit Suggestion</a>
+    <button class="logout" id="logoutBtn">Logout</button>
+  </nav>
+
+  <!-- 🔹 AFTER NAVBAR — main content ng homepage mo -->
+  <div class="content">
+    <h1>Welcome to E-Voice Spartan</h1>
+    <p>Submit your complaints and suggestions easily!</p>
+  </div>
+</body>
   </div>
 
   <div id="sidebar" class="sidebar">
