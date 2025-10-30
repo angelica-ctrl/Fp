@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>E-VoiceSpartan — File Complaint</title>
+  <style>
+    :root {
+      --accent:#b30000;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:#000;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:url("https://i.pinimg.com/736x/5c/ae/78/5cae78039b21c4cdbcee2349b836a810.jpg") no-repeat center center fixed;
+      background-size:cover;
+      background-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .navbar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 36px;background:rgba(180,180,180,0.8);
+      position:sticky;top:0;z-index:100;
+    }
+    .brand{font-weight:700;font-size:20px;cursor:pointer}
+    .nav-links{display:flex;gap:20px;align-items:center}
+    .nav-links a{color:#000;text-decoration:none;padding:6px 12px;border-radius:6px;font-weight:500}
+    .nav-links a:hover{background:rgba(255,255,255,0.6)}
+    .logout{border:2px solid var(--accent);padding:6px 14px;border-radius:20px;background:transparent;color:var(--accent);font-weight:700;cursor:pointer}
+
+    /* SIDEBAR */
+    .sidebar{
+      position:fixed;left:-250px;top:0;height:100%;width:250px;
+      background:rgba(255,255,255,0.2);backdrop-filter:blur(10px);
+      transition:left .3s ease;z-index:90;padding-top:60px;
+    }
+    .sidebar.open{left:0;}
+    .sidebar a{display:block;padding:12px 24px;color:#000;text-decoration:none;font-size:16px;cursor:pointer}
+    .sub-links{display:none;padding-left:16px}
+    .arrow{margin-right:8px;font-weight:700}
+
+    .file-complaint-wrap{
+      background-color: rgba(255, 255, 255, 0.45);
+      min-height:calc(100vh - 70px);
+      padding:48px 8%;
+      box-sizing:border-box;
+      z-index:30;
+    }
+
+    .steps{
+      width:100%;max-width:1000px;margin:0 auto 28px;position:relative;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:0 10%;box-sizing:border-box;
+    }
+    .steps::before{
+      content:"";position:absolute;left:10%;right:10%;top:50%;height:2px;background:white;transform:translateY(-50%);
+    }
+    .step{position:relative;z-index:2;text-align:center;width:56px;}
+    .step .circle{
+      width:38px;height:38px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:white;color:var(--accent);font-weight:700;border:2px solid var(--accent);margin:0 auto;
+    }
+    .step.active .circle{background:var(--accent);color:#fff}
+    .step p{margin:6px 0 0;font-size:13px;color:#000}
+
+    .categories{
+      width:100%;max-width:1100px;margin:8px auto 6px;
+      display:grid;grid-template-columns:1fr 1fr;gap:10px 10px;
+      align-items:start;box-sizing:border-box;padding:0 6%;
+    }
+    .cat-col{display:flex;flex-direction:column;gap:8px;}
+    .category-btn{
+      display:inline-block;width:100%;padding:12px 16px;
+      border-radius:999px;border:2px solid var(--accent);
+      background:rgba(255,255,255,0.9);color:#000;
+      font-weight:700;text-align:center;cursor:pointer;transition:all .15s ease;
+    }
+    .category-btn:hover, .category-btn.selected{background:var(--accent);color:#fff}
+
+    .others-wrap{display:flex;justify-content:center;padding-top:10px}
+    .category-btn.others{width:260px;max-width:90%}
+
+    .controls{
+      width:100%;max-width:1100px;margin:18px auto 0;
+      padding:0 6%;display:flex;justify-content:space-between;
+      box-sizing:border-box;
+    }
+    .btn{
+      border-radius:8px;padding:10px 22px;border:2px solid var(--accent);
+      background:transparent;color:var(--accent);font-weight:700;cursor:pointer;
+    }
+    .btn:hover{background:var(--accent);color:#fff}
+
+    .step2-wrap{display:none;justify-content:center;padding-top:30px}
+    .desc-box{
+      width:72%;background:rgba(255,255,255,0.9);
+      padding:20px;border-radius:12px;border:2px solid var(--accent);
+      box-sizing:border-box;
+    }
+    .desc-box textarea{
+      width:100%;min-height:200px;resize:none;padding:12px;
+      font-size:15px;border-radius:8px;border:1px solid #ccc;box-sizing:border-box;
+    }
+
+    .footer{
+      background:rgba(255,255,255,0.8);
+      text-align:center;padding:14px 0;
+      font-weight:600;font-size:15px;color:#000;
+    }
+
+    @media(max-width:900px){
+      .steps::before{left:6%;right:6%}
+      .steps{padding:0 6%}
+      .categories{grid-template-columns:1fr;gap:8px 8px;padding:0 4%}
+      .cat-col{width:100%}
+      .category-btn.others{width:90%}
+      .desc-box{width:88%}
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div style="display:flex;gap:16px;align-items:center">
+      <div id="menuBtn" style="cursor:pointer;font-size:22px;">☰</div>
+      <div class="brand">E-VoiceSpartan</div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#file-complaint" style="background:rgba(255,255,255,0.8);border:1px solid var(--accent);color:var(--accent);padding:6px 12px;border-radius:6px">File Complaint</a>
+      <a href="#suggestion">Submit Suggestion</a>
+      <button class="logout">Logout</button>
+    </nav>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+    <a id="profileToggle" style="display:flex;align-items:center"><span class="arrow">▶</span> My Profile</a>
+    <div id="profileSub" class="sub-links">
+      <a href="#">Personal Information</a>
+      <a href="#">My Submissions</a>
+    </div>
+
+    <a id="settingsToggle" style="display:flex;align-items:center"><span class="arrow">▶</span> Settings</a>
+    <div id="settingsSub" class="sub-links">
+      <a href="#">Account Setting</a>
+      <a href="#">Anonymity Setting</a>
+    </div>
+
+    <hr style="border:none;height:1px;background:rgba(0,0,0,0.12);margin:14px 0">
+    <a href="#">FAQs</a>
+    <hr style="border:none;height:1px;background:rgba(0,0,0,0.12);margin:14px 0">
+    <a href="#">About Us</a>
+    <a href="#">Contact Us</a>
+  </aside>
+
+  <main class="file-complaint-wrap" id="file-complaint">
+    <div class="steps">
+      <div class="step step-1 active"><div class="circle">1</div><p>Category</p></div>
+      <div class="step step-2"><div class="circle">2</div><p>Description</p></div>
+      <div class="step step-3"><div class="circle">3</div><p>Attach File</p></div>
+      <div class="step step-4"><div class="circle">4</div><p>Review</p></div>
+      <div class="step step-5"><div class="circle">5</div><p>Confirmation</p></div>
+    </div>
+
+    <section id="step1">
+      <div class="categories">
+        <div class="cat-col">
+          <button class="category-btn">Academic Concerns</button>
+          <button class="category-btn">Campus Cleanliness &amp; Environment</button>
+          <button class="category-btn">Facilities &amp; Equipment</button>
+          <button class="category-btn">Health &amp; Safety</button>
+        </div>
+        <div class="cat-col">
+          <button class="category-btn">Administrative Services</button>
+          <button class="category-btn">Academic Services</button>
+          <button class="category-btn">Student Services</button>
+          <button class="category-btn">Staff / Faculty</button>
+        </div>
+      </div>
+
+      <div class="others-wrap">
+        <button class="category-btn others">Others / General Concern</button>
+      </div>
+
+      <div class="controls">
+        <span></span>
+        <button id="nextBtn" class="btn">Next</button>
+      </div>
+    </section>
+
+    <section id="step2" class="step2-wrap">
+      <div class="desc-box">
+        <textarea id="descriptionField" placeholder="Description about your chosen category..."></textarea>
+
+        <div class="controls">
+          <button id="backBtn" class="btn">Back</button>
+          <button id="nextBtn2" class="btn">Next</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">Leading Innovations, Transforming Lives, Building the Nation</div>
+
+  <script>
+    const menuBtn=document.getElementById('menuBtn');
+    const sidebar=document.getElementById('sidebar');
+    menuBtn.addEventListener('click',()=>{sidebar.classList.toggle('open');});
+
+    const profileToggle=document.getElementById('profileToggle');
+    const profileSub=document.getElementById('profileSub');
+    const settingsToggle=document.getElementById('settingsToggle');
+    const settingsSub=document.getElementById('settingsSub');
+
+    profileToggle.addEventListener('click',()=>{profileSub.style.display=profileSub.style.display==='block'?'none':'block';profileToggle.querySelector('.arrow').textContent=profileSub.style.display==='block'?'▼':'▶';});
+    settingsToggle.addEventListener('click',()=>{settingsSub.style.display=settingsSub.style.display==='block'?'none':'block';settingsToggle.querySelector('.arrow').textContent=settingsSub.style.display==='block'?'▼':'▶';});
+
+    const step1=document.getElementById('step1');
+    const step2=document.getElementById('step2');
+    const nextBtn=document.getElementById('nextBtn');
+    const nextBtn2=document.getElementById('nextBtn2');
+    const backBtn=document.getElementById('backBtn');
+    const stepsCircles=document.querySelectorAll('.step');
+
+    function setActiveStep(n){stepsCircles.forEach((el,i)=>{if(i===n)el.classList.add('active');else el.classList.remove('active');});}
+
+    nextBtn.addEventListener('click',()=>{step1.style.display='none';step2.style.display='flex';setActiveStep(1);});
+    backBtn.addEventListener('click',()=>{step2.style.display='none';step1.style.display='block';setActiveStep(0);});
+    const catButtons=Array.from(document.querySelectorAll('.category-btn'));
+    catButtons.forEach(btn=>{btn.addEventListener('click',()=>{catButtons.forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');});});
+    nextBtn2.addEventListener('click',()=>{setActiveStep(2);alert('Next step (Attach File) will be implemented next.');});
+  </script>
+</body>
+</html>
+
+
